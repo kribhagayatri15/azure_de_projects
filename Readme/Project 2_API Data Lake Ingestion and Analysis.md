@@ -119,7 +119,7 @@ weather/year=2023/month=10/day=25/city=London/data.json
 
 We use **Synapse Serverless SQL Pool** with OPENROWSET.
 
-SQL
+```SQL
 
 SELECT \*  
 FROM OPENROWSET(  
@@ -130,7 +130,7 @@ FROM OPENROWSET(
 ) WITH (doc NVARCHAR(MAX)) AS rows
 
 * *Note:* JSON querying in SQL is tricky. We often read the whole file as a single string (doc) and then use JSON\_VALUE(doc, '$.main.temp') to parse fields.
-
+```
 ## ---
 
 **5\. Implementation Guide (Step-by-Step)**
@@ -182,7 +182,7 @@ Instead of hardcoding "2023", change the Sink Dataset file path to use parameter
 
 Paste this into Synapse SQL script to parse the JSON:
 
-SQL
+```SQL
 
 SELECT  
     JSON\_VALUE(doc, '$.name') AS City,  
@@ -196,7 +196,7 @@ FROM
         FIELDQUOTE \= '0x0b',  
         ROWTERMINATOR \= '0x0b'  
     ) WITH (doc NVARCHAR(MAX)) AS rows
-
+```
 ## ---
 
 **6\. Key Learnings & Takeaways**

@@ -142,7 +142,7 @@ For pricing models, a trip with 0 passengers is impossible. However, dropping 5%
 1. **Create a Secret Scope:** (Advanced, skipped for now. We will use Access Keys directly for simplicity, though not production-safe).  
 2. **Create a Notebook:** Name it 01\_Ingest\_Clean.  
 3. **Run this Code (Cell 1):** Connect to ADLS.  
-   Python  
+   ```Python  
    \# Configuration  
    storage\_account\_name \= "adlsquickmartdev" \# REPLACE ME  
    storage\_account\_key \= "YOUR\_ACCESS\_KEY\_HERE" \# REPLACE ME (Get from Azure Portal \> Storage \> Access Keys)  
@@ -155,13 +155,13 @@ For pricing models, a trip with 0 passengers is impossible. However, dropping 5%
    )
 
    \# Path to file  
-   file\_path \= f"abfss://{container\_name}@{storage\_account\_name}.dfs.core.windows.net/nyc-taxi/2023-01.parquet"
+   file\_path \= f"abfss://{container\_name}@{storage\_account\_name}.dfs.core.windows.net/nyc-taxi/2023-01.parquet" ```
 
 ### **Phase 3: The Transformation (PySpark)**
 
 **Step 3.1: Read Data (Bronze)**
 
-Python
+``` python
 
 \# Read Parquet  
 df\_raw \= spark.read.parquet(file\_path)
@@ -195,17 +195,17 @@ df\_cleaned \= df\_cleaned.dropDuplicates(\['tpep\_pickup\_datetime', 'tpep\_dro
 original\_count \= df\_raw.count()  
 final\_count \= df\_cleaned.count()  
 print(f"Rows Dropped: {original\_count \- final\_count}")
-
+```
 **Step 3.3: Write Data (Silver)**
 
-Python
+```Python
 
 \# Write to "Silver" container as Delta Table  
 output\_path \= f"abfss://silver-cleaned@{storage\_account\_name}.dfs.core.windows.net/nyc-taxi/"
 
 df\_cleaned.write.format("delta").mode("overwrite").save(output\_path)  
 print("✅ Silver Data Written Successfully")
-
+```
 ## ---
 
 **6\. Key Learnings & Takeaways**

@@ -53,7 +53,7 @@ Since we don't have access to a real POS system, we will simulate one.
 
 **Action:** Copy the code below into a file named generate\_sales.py on your computer. Run it to generate your source data.
 
-Python
+``` python
 
 import csv  
 import random  
@@ -90,7 +90,7 @@ def generate\_data():
 
 if \_\_name\_\_ \== "\_\_main\_\_":  
     generate\_data()
-
+```
 ## ---
 
 **4\. The Design Phase (Interactive)**
@@ -124,8 +124,7 @@ Before you touch the Azure Portal, you must act as the Architect. Read the chall
 ### **✅ Architect's Solution (Reference)**
 
 **Answer A: The Table Schema**
-
-SQL
+```SQL
 
 CREATE TABLE dbo.Sales\_Raw (  
     TransactionID INT PRIMARY KEY,  
@@ -136,7 +135,7 @@ CREATE TABLE dbo.Sales\_Raw (
     Amount DECIMAL(10, 2)      \-- CORRECT: DECIMAL or MONEY.  
                                \-- INCORRECT: FLOAT (Causes rounding errors).  
 );
-
+```
 **Answer B: Environment Strategy**
 
 We use **Parameters** and **Key Vault**.
@@ -149,8 +148,8 @@ We use **Parameters** and **Key Vault**.
 
 **Answer C: The Test Queries**
 
-1. **Completeness:** SELECT COUNT(\*) FROM dbo.Sales\_Raw; (Must match CSV row count).  
-2. **Accuracy:** SELECT SUM(Amount) FROM dbo.Sales\_Raw; (Must match Excel sum).
+1. **Completeness:** `SELECT COUNT(\*) FROM dbo.Sales\_Raw;` (Must match CSV row count).  
+2. **Accuracy:** `SELECT SUM(Amount) FROM dbo.Sales\_Raw;` (Must match Excel sum).
 
 ## ---
 
